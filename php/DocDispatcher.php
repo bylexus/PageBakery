@@ -116,8 +116,8 @@ class DocDispatcher {
 		        if($res == '.' || $res == '..') 
 		            continue; 
 		        if(is_dir($source . '/' . $res)){
-		            $this->recoursiveCopy($source . '/' . $res, $destDirname.'/'.$res); 
-		        } else { 
+		            $this->recursiveCopy($source . '/' . $res, $destDirname); 
+		        } else {
 		            copy($source . '/' . $res, $destDirname . '/' . $res); 
 		        } 
 		    }

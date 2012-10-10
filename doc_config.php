@@ -58,9 +58,7 @@ Config::set('pages',array(
  * the static version of the page. Relative to the root dir of The Page Bakery.
  */
 Config::set('staticResources', array(
-	'css',
-	'img',
-	'js'
+	'static'
 ));
 
 /**
