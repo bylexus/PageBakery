@@ -42,7 +42,7 @@
       <a class="brand" href="{$defaultPage.link}">The Page Bakery!</a>
       <ul class="nav">
         {foreach $pages as $pageKey=>$pageItem}
-          <li class="{($page==$pageKey)?'active':''}"><a href="{$pageItem.link}"><i class="{$pageItem.iconCls}"></i> {$pageItem.title|escape:html}</a></li>
+          <li class="{($page_key==$pageKey)?'active':''}"><a href="{$pageItem.link}"><i class="{$pageItem.iconCls}"></i> {$pageItem.title|escape:html}</a></li>
         {/foreach}
       </ul>
 
