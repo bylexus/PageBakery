@@ -1,11 +1,15 @@
 The Page Bakery!
 ================
 
-A very small PHP framework for creating simple pages for both online and static (offline) usage.
+A very small PHP framework for creating simple pages for both online and static (offline) usage based on layout and content templates.
 
-The Page Bakery's main goal is s small one: Keep it simple, small.
-In some more words:
-* The Page Bakery create pages from a layout file and a content template file.
+The Page Bakery's main goals are:
+* Create small pages/sites with small effort
+* Keep a global layout for all pages without copy/paste it
+* Have the possibility to view the pages both online AND in a static offline version
+
+In some more details, The Page Bakery's main features are:
+* The Page Bakery create pages from a layout template and a content template file.
 * Those pages can be displayed dynamically on a PHP-enabled web server.
 * Those pages can ALSO be generated as static HTML version, independant of a server,
   well inter-linked and bundled with all needed files.
