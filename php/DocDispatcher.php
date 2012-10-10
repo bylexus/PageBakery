@@ -195,14 +195,16 @@ class DocDispatcher {
 
 		if ($pagePath) {
 			$this->smarty->assign('error',false);
-			$this->smarty->assign('page',$this->page);
+			$this->smarty->assign('page_key',$this->page);
 			$this->smarty->assign('pagename',$pages[$this->page]['title']);
+			$this->smarty->assign('page',$pages[$this->page]);
 
 			$page = $this->smarty->fetch('file:'.$this->getPagePath($this->page));
 
 		} else {
 			$this->smarty->assign('error',true);
 			$this->smarty->assign('error_msg','Page not found.');
+			$this->smarty->assign('page_key',$this->page);
 			$this->smarty->assign('pagename','Error');
 			$page = $this->smarty->fetch('file:'.$this->getPagePath('error'));
 		}
