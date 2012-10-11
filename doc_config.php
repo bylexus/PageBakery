@@ -49,7 +49,10 @@
 Config::set('pages',array(
 	'index' => array('title' => 'Overview','iconCls'=> 'icon-home'),
 	'usage' => array('title' => 'Usage','iconCls' => 'icon-wrench','layout'=>'layout'),
-	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe'),
+	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe','subpages' => array(
+		'test1' => array('title' => 'Test 1'),
+		'test2' => array('title' => 'Test 2')
+	)),
 	'contact' => array('title' => 'Contact','iconCls' => 'icon-comment')
 ));
 

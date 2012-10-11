@@ -48,6 +48,7 @@ require_once(dirname(__FILE__).'/Config.php');
 class DocDispatcher {
 	private $smarty = null;
 	private $page;
+	private $sub = null;
 	private $tmp;
 	private $pagedir;
 
@@ -159,16 +160,47 @@ class DocDispatcher {
 				$this->page = $page;
 			} else $this->page = null;
 		}
+
+		if (isset($_REQUEST['sub'])) {
+			$sub = basename($_REQUEST['sub']);
+			if ($this->getPagePath($page.'.'.$sub)) {
+				$this->sub = $sub;
+			} else $this->sub = null;
+		}
 	}
 
-	private function createPageLink($page, $mode) {
+	private function createPageLink($page, $mode, $subpage = null) {
 		$link = '';
 		if ($mode == 'web')	{
-				$link = './index.php?page='.basename($page);	
+				$link = './index.php?page='.basename($page);
+				if ($subpage) {
+					$link .= '&sub='.basename($subpage);
+				}
 			} else {
-				$link = basename($page).'.html';
+				$link = basename($page);
+				if ($subpage) {
+					$link .= '.'.basename($subpage);
+				}
+				$link .= '.html';
 		}
 		return $link;
+	}
+
+	private function enhancePageConfig($mode = 'web') {
+		$config = Config::get('pages');
+		// Enhance all pages entries with a 'link' entry to be used in the template:
+		foreach($config as $key=>$entry) {
+			$entry['link'] = $this->createPageLink($key,$mode);
+			// Subpages present? do it also for those.
+			if (isset($entry['subpages']) && is_array($entry['subpages'])) {
+				foreach($entry['subpages'] as $subkey=>$subentry) {
+					$entry['subpages'][$subkey]['link'] = $this->createPageLink($key,$mode,$subkey);
+				}
+			}
+			$config[$key] = $entry;
+		}
+
+		return $config;
 	}
 
 	private function outputPage($mode = 'web') {
@@ -179,24 +211,26 @@ class DocDispatcher {
 		$page = '';
 		$pagePath = $this->getPagePath($this->page);
 
-		$pages = Config::get('pages');
-		// Enhance all pages entries with a 'link' entry to be used in the template:
-		foreach($pages as $key=>$entry) {
-			$entry['link'] = $this->createPageLink($key,$mode);
-			$pages[$key] = $entry;
-		}
+		$pages = $this->enhancePageConfig($mode);
+		
 
 		$this->smarty->assign('pages',$pages);
 		$defaultPage = $pages[Config::get('defaultPage','index')];
-		$defaultPage['link'] = $this->createPageLink(Config::get('defaultPage','index'),$mode);
 		$this->smarty->assign('defaultPage',$defaultPage);
 		
-
 		if ($pagePath) {
 			$this->smarty->assign('error',false);
 			$this->smarty->assign('page_key',$this->page);
+			$this->smarty->assign('sub_key',$this->sub);
 			$this->smarty->assign('pagename',$pages[$this->page]['title']);
 			$this->smarty->assign('page',$pages[$this->page]);
+
+			// Subpage present?
+			if ($this->sub) {
+				$this->smarty->assign('sub',$pages[$this->page]['subpages'][$this->sub]);
+				$sub = $this->smarty->fetch('file:'.$this->getPagePath($this->page.'.'.$this->sub));
+				$this->smarty->assign('subpage_content',$sub);
+			}
 
 			$page = $this->smarty->fetch('file:'.$this->getPagePath($this->page));
 
@@ -204,6 +238,7 @@ class DocDispatcher {
 			$this->smarty->assign('error',true);
 			$this->smarty->assign('error_msg','Page not found.');
 			$this->smarty->assign('page_key',$this->page);
+			$this->smarty->assign('sub_key',$this->sub);
 			$this->smarty->assign('pagename','Error');
 			$page = $this->smarty->fetch('file:'.$this->getPagePath('error'));
 		}
