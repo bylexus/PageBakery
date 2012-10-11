@@ -1,14 +1,27 @@
-<h2><a name="writing">Writing Pages</a></h2>
-<p>A "Page" in The Page Bakery is generated with two components:
+<h2>Writing Pages</h2>
+<p>
+	The Page bakery knows 3 types of entities:
 	<ul>
-		<li>The Layout, which is the surrounding "Skeleton" of a page. See <a href="#layouts">Defining Layouts</a> for more details on layouts.</li>
-		<li>The page content, which is the, well, content, surrounded by the skeleton</li>
+		<li><a href="{$page.subpages.layouts.link}">Layouts</a> define the global skeleton or
+			design of a page. In the standard case, a Page Bakery site just contains 1 layout.</li>
+		<li>A Page is part of a layout, which form a whole web page together. The page fills the
+			layout with content.
+		</li>
+		<li>A page can contain multiple <a href="{$page.subpages.writing_subpages.link}">sub-pages</a>, e.g.
+			it can define a sub-menu which splits the page into smaller parts.</a></li>
 	</ul>
-	In the standard case, you write one layout file, but multiple page content files: The idea behind the layouts is the shared design of every page, so you can concentrate on the content instead.</p>
-<p>All layout and page content files are <a href="http://smarty.net/">Smarty</a>-Templates. Please refer to their documentation for an in-detail description of Smarty's possibilities.</p>
-<p>All layout and page content files go to the <code>pages/</code> directory, or wherever you set the <code>pageDir</code> variable in doc_config.php The filename must be <code>&lt;page-key&gt;.html</code>. The page-key is the key you used in the <code>pages</code> config in doc_config.php.</p>
+</p>
 
-<p>A very simple page template can look as follows:
+<p>In the standard case, you write one layout file, but multiple page content files: The idea behind the layouts is the shared design of every page, so you can concentrate on the content instead.</p>
+<p>All layout and page content files are <a href="http://smarty.net/">Smarty 3</a>-Templates. Please refer to their documentation for an in-detail description of Smarty's possibilities.</p>
+<p>All layout and page content files go to the <code>pages/</code> directory, or wherever you set the <code>pageDir</code> variable in doc_config.php The filename must be <code>pages/page-key.html</code>. The page-key is the key you used in the <code>pages</code> config in doc_config.php.</p>
+
+<p>An example entry for the page 'index' in the config looks as follows:</p>
+<pre><code>Config::set('pages',array(
+	'index' => array('title' => 'Overview','iconCls'=> 'icon-home')
+);</code></pre>
+
+<p>The corresponding file is <code>pages/index.html</code>. A very simple page template can look as follows:
 {literal}
 <pre><code>&lt;h1&gt;Hello, World!&lt;/h1&gt;
 &lt;p&gt;You are on page '{$page_key}'.&lt;/p&gt;
@@ -17,7 +30,7 @@
 which ends in:
 <div class="well">
 <h1>Hello, World!</h1>
-<p>You are on page '{$page_key}'.</p>
+<p>You are on page 'index'. </p>
 </div>
 </p>
 
@@ -25,6 +38,85 @@ which ends in:
 All templates, including the layout template, know the following Smarty-assigned variables:
 <table class="table table-striped table-bordered table-hover">
 	<thead>
-		<tr><th>Variable name</th><th>Description</th><th>Example</th></tr>
+		<tr><th>Variable name</th><th>Description</th><th>Template Usage Example</th></tr>
 	</thead>
+	<tbody>
+		<tr>
+			<td>$pages</td>
+			<td>Contains the 'pages' configuration array, enhanced with the actual pages links,<br />
+				which are either dynamic links for online-use or the link to a static html file when
+				the page was being built for static usage.</td>
+			<td><pre><code>Please refer to page <br />&lt;a href=&quot;{literal}{$pages.usage.link}{/literal}&quot;&gt;Usage&lt;/a&gt;</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$config</td>
+			<td>Contains the whole Configuration as defined in <code>doc_config.php</code>, unmodified.</td>
+			<td><pre><code>Page dir: {literal}{$config.pageDir}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$defaultPage</td>
+			<td>Contains the default page configuration array Same as one entry in $pages. The $defaultPage variable is always set, except an error occurs. The default page can be set by using <code>Config::set('defaultPage','page-key');</code>, and, if not set, defaults to <code>index</code>.</td>
+			<td><pre><code>Back to &lt;a href=&quot;{literal}{$defaultPage.link}{/literal}&quot;&gt;Home&lt;/a&gt;</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$page_key</td>
+			<td>Contains the page key as defined in the 'pages' array of the actual page. Useful
+				for e.g. check if you are on a certain page: Highlight actual page's menu entry, for example.</td>
+			<td><pre><code>{literal}{if $page_key == 'index'}Welcome Home!{/if}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$sub_key</td>
+			<td>Contains the sub-page key as defined in the 'subpages' array of the actual page. Useful
+				for example to check if a sub-page is selected or not.</td>
+			<td><pre><code>{literal}{if $sub_key}{$subpage_content}{/if}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$sub_key</td>
+			<td>Contains the sub-page key as defined in the 'subpages' array of the actual page. Useful
+				for example to check if a sub-page is selected or not.</td>
+			<td><pre><code>{literal}{if $sub_key}{$subpage_content}{/if}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$page</td>
+			<td>Contains the actual page's config array, including calculated link.</td>
+			<td><pre><code>{literal}Page title: {$page.title}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$sub</td>
+			<td>If a subpage within a page is defined and requested, <code>$sub</code> contains the
+				actual subpage's config array.</td>
+			<td><pre><code>{literal}{if $sub_key}You are on sub-page {$sub.title}.{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$page_content</td>
+			<td><td><pre><code>{literal}{/literal}</code></pre>
+			</td>
+		</tr>
+
+		<tr>
+			<td>$subpage_content</td>
+			<td><td><pre><code>{literal}{/literal}</code></pre>
+			</td>
+		</tr>
+	</tbody>
 </table>
+
+<h3>Linking between pages</h3>
+
+<h3>Linkink to static resources</h3>

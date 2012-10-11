@@ -33,7 +33,7 @@ require_once(dirname(__FILE__).'/Config.php');
  *
  * Generate static output:
  * $dd = new DocDispatcher();
- * $dd->
+ * $dd->createStaticPages('/path/to/an/output/dir');
  *
  * That's it!
  *
@@ -239,6 +239,7 @@ class DocDispatcher {
 		
 
 		$this->smarty->assign('pages',$pages);
+		$this->smarty->assign('config',Config::getConfigArray());
 		$defaultPage = $pages[Config::get('defaultPage','index')];
 		$this->smarty->assign('defaultPage',$defaultPage);
 		
@@ -246,7 +247,6 @@ class DocDispatcher {
 			$this->smarty->assign('error',false);
 			$this->smarty->assign('page_key',$this->page);
 			$this->smarty->assign('sub_key',$this->sub);
-			$this->smarty->assign('pagename',$pages[$this->page]['title']);
 			$this->smarty->assign('page',$pages[$this->page]);
 
 			// Subpage present?
@@ -263,7 +263,6 @@ class DocDispatcher {
 			$this->smarty->assign('error_msg','Page not found.');
 			$this->smarty->assign('page_key',$this->page);
 			$this->smarty->assign('sub_key',$this->sub);
-			$this->smarty->assign('pagename','Error');
 			$page = $this->smarty->fetch('file:'.$this->getPagePath('error'));
 		}
 		$this->smarty->assign('page_content',$page);
