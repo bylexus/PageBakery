@@ -62,7 +62,6 @@ class DocDispatcher {
 
 	public function doWebOutput() {
 		$this->parseRequest();
-		//$this->smarty->assign('homelink','./index.php');
 		$this->outputPage('web');
 	}
 
