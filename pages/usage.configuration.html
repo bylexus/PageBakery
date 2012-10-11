@@ -1,0 +1,39 @@
+<h2>Setup &amp; Configuration</h2>
+<p>The Page Bakery comes with the following directory structure:</p>
+<pre>pagebakery
+ |- pages/
+ |   |- *.html
+ |- php/
+ |- static/
+ |- tmp/       &lt;--- Make sure this is writable by the web server / user
+ |- index.php
+ |- generate_static.php
+ |- doc_config.php
+</pre>
+
+<p>The installation procedure is very simple: Just copy the whole pagebakery folder to 
+	e.g. your webroot. The pagebakery folder itself can be renamed to whatever you need.</p>
+<p>Point to the index.php file in your web browser, and you should get this documentation.</p>
+
+<h3>Configuration: doc_config.php</h3>
+<p>All configuration is done in <em>doc_config.php</em>. The configuration is done by setting Configuration variables using the <code>Config::set()</code> method, e.g.:
+	<pre><code>Config::set('config-key','config-value');</pre></code>
+The most important config key and most probably the only one to set is the <code>pages</code> configuration: It is an array containing an entry for each page you want to display.</p>
+<h4>The 'pages' configuration</h4>
+<p>Let's begin with an example, the configuration for this documentation:
+<pre><code>Config::set('pages',array(
+	// Signature: 'page-key' => config array
+	'index' => array('title' => 'Overview','iconCls'=> 'icon-home'),
+	'usage' => array('title' => 'Usage','iconCls' => 'icon-wrench','layout'=>'layout'),
+	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe'),
+	'contact' => array('title' => 'Contact','iconCls' => 'icon-comment')
+));</code></pre>
+Each page-key of the config array corresponds to a <code>pages/&lt;key.html&gt;</code> file, which represents the page content template for a single page. The value in the pages array is a config array, which can be accessed in the template. This config array knows 2 special values:
+<ul>
+	<li><code>layout</code>: If set, the defined layout file is used instead of the global layout file.</li>
+	<li><code>link</code>: Set at runtime by the framework, represents the (relative) link to the generated page, either a dynamic or static link.</li>
+</ul>
+All other config options can be chosen as needed, they can be accessed in the template later.
+</p>
+<h4>The other config options</h4>
+<p>Please refer to the original <code>doc_config.php</code> for more options. Most of them are self-explanatory, and the file is well-commented. Let's create some pages now!</p>

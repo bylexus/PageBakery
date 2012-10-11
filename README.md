@@ -15,6 +15,7 @@ In some more details, The Page Bakery's main features are:
   well inter-linked and bundled with all needed files.
 * Its main goal is to create small pages, e.g. Documentation pages, with
   the least possible effort both in creation and maintenance.
+* Support for pages and sub-pages: Simple hierarchy structure
 * If you decide to change the page's design, you only have to change the layout
 
 This project is mainly grown out of the need of creating documentation HTML,

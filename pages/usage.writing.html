@@ -1,0 +1,30 @@
+<h2><a name="writing">Writing Pages</a></h2>
+<p>A "Page" in The Page Bakery is generated with two components:
+	<ul>
+		<li>The Layout, which is the surrounding "Skeleton" of a page. See <a href="#layouts">Defining Layouts</a> for more details on layouts.</li>
+		<li>The page content, which is the, well, content, surrounded by the skeleton</li>
+	</ul>
+	In the standard case, you write one layout file, but multiple page content files: The idea behind the layouts is the shared design of every page, so you can concentrate on the content instead.</p>
+<p>All layout and page content files are <a href="http://smarty.net/">Smarty</a>-Templates. Please refer to their documentation for an in-detail description of Smarty's possibilities.</p>
+<p>All layout and page content files go to the <code>pages/</code> directory, or wherever you set the <code>pageDir</code> variable in doc_config.php The filename must be <code>&lt;page-key&gt;.html</code>. The page-key is the key you used in the <code>pages</code> config in doc_config.php.</p>
+
+<p>A very simple page template can look as follows:
+{literal}
+<pre><code>&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;p&gt;You are on page '{$page_key}'.&lt;/p&gt;
+</code></pre>
+{/literal}
+which ends in:
+<div class="well">
+<h1>Hello, World!</h1>
+<p>You are on page '{$page_key}'.</p>
+</div>
+</p>
+
+<h3>Template variables</h3>
+All templates, including the layout template, know the following Smarty-assigned variables:
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<tr><th>Variable name</th><th>Description</th><th>Example</th></tr>
+	</thead>
+</table>

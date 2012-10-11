@@ -79,14 +79,32 @@ class DocDispatcher {
 		$pages = Config::get('pages');
 		foreach($pages as $page=>$pageInfo) {
 			$this->page = basename($page);
-			echo "Building page {$this->page}...\n";
+			$this->sub = null;
+			
+			// Default sub page for page?
+			if (isset($pageInfo['defaultSubpage'])) {
+				$this->sub = basename($pageInfo['defaultSubpage']);
+			}
 
+			echo "Building page {$this->page}...\n";
 			ob_start();
 			$this->outputPage('static');
 			$output = ob_get_contents();
-
 			file_put_contents($outputDir.'/'.$this->page.'.html',$output);
 			ob_end_clean();
+
+			// Are there sub-pages? Build them too:
+			if (isset($pageInfo['subpages']) && is_array($pageInfo['subpages'])) {
+				foreach($pageInfo['subpages'] as $subpage=>$subpageInfo) {
+					$this->sub = basename($subpage);
+					echo "    Sub-Page {$this->sub}...\n";
+					ob_start();
+					$this->outputPage('static');
+					$output = ob_get_contents();
+					file_put_contents($outputDir.'/'.$this->page.'.'.$this->sub.'.html',$output);
+					ob_end_clean();					
+				}
+			}
 		}
 
 		// Copy also static resources:
@@ -159,6 +177,12 @@ class DocDispatcher {
 			if ($this->getPagePath($page)) {
 				$this->page = $page;
 			} else $this->page = null;
+		}
+
+		// Default sub page for page?
+		$conf = Config::get('pages');
+		if (isset($conf[$this->page]) && isset($conf[$this->page]['defaultSubpage'])) {
+			$this->sub = basename($conf[$this->page]['defaultSubpage']);
 		}
 
 		if (isset($_REQUEST['sub'])) {

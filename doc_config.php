@@ -48,11 +48,18 @@
  */
 Config::set('pages',array(
 	'index' => array('title' => 'Overview','iconCls'=> 'icon-home'),
-	'usage' => array('title' => 'Usage','iconCls' => 'icon-wrench','layout'=>'layout'),
-	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe','subpages' => array(
-		'test1' => array('title' => 'Test 1'),
-		'test2' => array('title' => 'Test 2')
-	)),
+	'usage' => array('title' => 'Usage','iconCls' => 'icon-wrench','layout'=>'layout',
+		'subpages' => array(
+			'requirements' => array('title' => 'Requirements'),
+			'configuration' => array('title' => 'Configuration'),
+			'writing' => array('title' => 'Writing Pages'),
+			'writing_subpages' => array('title' => 'Writing Subpages'),
+			'layouts' => array('title' => 'Defining Layouts'),
+			'dynamic' => array('title' => 'Dynamic page display'),
+			'static' => array('title' => 'Generate Static HTML Pages')
+		)
+	),
+	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe'),
 	'contact' => array('title' => 'Contact','iconCls' => 'icon-comment')
 ));
 
@@ -72,7 +79,7 @@ Config::set('pageDir',realpath(dirname(__FILE__).'/pages'));
 /**
  * tmpDir sets the (writable) temp dir for the Smarty engine.
  */
-Config::set('tmpDir',realpath(dirname(__FILE__).'/tmp'));
+Config::set('tmpDir',dirname(__FILE__).'/tmp');
 
 /**
  * defaultPage defines an entry in the 'pages' config which

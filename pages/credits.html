@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Credits</h1>
 <p>This software uses the following free, 3rd party libraries:</p>
 
@@ -6,12 +7,4 @@
 	<li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a>, HTML/CSS framework</li>
 	<li><a href="http://jquery.com">jQuery</a>, THE JavaScript library</li>
 </ul>
-
-Subs:
-<ul>
-	{foreach $page.subpages as $subkey=>$subconfig}
-		<li><a href="{$subconfig.link}">{$subconfig.title}{($sub_key==$subkey)?'*':''}</a></li>
-	{/foreach}
-</ul>
-
-{$subpage_content|default:''}
+</div>
