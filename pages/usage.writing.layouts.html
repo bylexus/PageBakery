@@ -1,0 +1,32 @@
+<h1>Writing Layouts</h1>
+<p>In the standard case, you will write one layout file, but multiple page content files: The idea behind the layouts is the shared design of every page, so you can concentrate on the content instead. In theory, a site can have multiple layouts, e.g. an introduction page can have another look-and-feel than the rest of the layout.</p>
+
+<p>
+Each layout is defined as Smarty template and is stored in <code>pages/[layout-name].html</code>. The default layout for a page, if not specified otherwise,
+is <code>layout</code>, and so a corresponding <code>pages/layout.html</code> file must be present. If a page must use another layout, you just set the <code>layout</code> parameter in the doc_config.php for that specific page.
+</p>
+
+<h2>A layout example</h2>
+A simple layout can look as follows:
+<pre><code>{literal}&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;{$page.title} - Simple Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;div class=&quot;Menu&quot;&gt;
+		{foreach $pages as $pageKey=&gt;$pageItem}
+          &lt;a href=&quot;{$pageItem.link}&quot;&gt;{$pageItem.title|escape:html}&lt;/a&gt;
+        {/foreach}
+	&lt;/div&gt;
+
+	&lt;div id=&quot;content&quot;&gt;
+		{$page_content}
+	&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+{/literal}</code></pre>
+
+<p>This example aready defines a dynamic page title, a link menu to all available pages and a placeholder for the actual page's content.</p>
+
+<p>Please refer to the <a href="{$page.subpages['writing'].link}">{$page.subpages['writing'].title}</a> section for more on template variables, or continue on the <a href="{$page.subpages['writing.pages'].link}">{$page.subpages['writing.pages'].title}</a> section.</p>

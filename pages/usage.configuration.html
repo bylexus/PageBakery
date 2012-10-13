@@ -28,10 +28,14 @@ The most important config key and most probably the only one to set is the <code
 	'credits' => array('title' => 'Credits','iconCls' => 'icon-globe'),
 	'contact' => array('title' => 'Contact','iconCls' => 'icon-comment')
 ));</code></pre>
-Each page-key of the config array corresponds to a <code>pages/&lt;key.html&gt;</code> file, which represents the page content template for a single page. The value in the pages array is a config array, which can be accessed in the template. This config array knows 2 special values:
+Each page-key of the config array corresponds to a <code>pages/&lt;key.html&gt;</code> file, which represents the page content template for a single page. The value in the pages array is a config array, which can be accessed in the template. This config array knows the following special values:
 <ul>
 	<li><code>layout</code>: If set, the defined layout file is used instead of the global layout file.</li>
 	<li><code>link</code>: Set at runtime by the framework, represents the (relative) link to the generated page, either a dynamic or static link.</li>
+	<li><code>subpages</code>: an array defining sub-pages of the actual
+		page, in the same format as the page itself.</li>
+	<li><code>defaultSubpage</code>: The name of the subpage to be
+		displayed if this page is not called with a subpage request.</li>
 </ul>
 All other config options can be chosen as needed, they can be accessed in the template later.
 </p>

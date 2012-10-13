@@ -1,0 +1,26 @@
+<h2>Linking between pages</h2>
+<p>Linking between pages must also be done using the template variables: The links have to be generated in different ways when using in online or static mode.</p>
+<p>Linking using the template variables is quite easy: <br />
+	<code>{literal}&lt;a href=&quot;{$pages.usage.link}&quot;&gt;{$pages.usage.title}&lt;/a&gt;{/literal}</code> <br />
+	outputs a link to the <code>usage</code> page, while <br />
+	<code>{literal}&lt;a href=&quot;{$pages.usage.subpages.writing.link}&quot;&gt;{$pages.usage.subpages.writing.title}&lt;/a&gt;{/literal}</code> <br />
+	links to the subpage <code>writing</code> of page <code>usage</code>. 
+	Of course the actual page / subpage variables can also be used: <br />
+	<code>{literal}&lt;a href=&quot;{$sub.link}&quot;&gt;{$sub.title}&lt;/a&gt;{/literal}</code><br />
+	links to the actual page's actual sub-page,
+	or <br /><code>{literal}&lt;a href=&quot;{$page.subpages.writing.link}&quot;&gt;{$page.subpages.writing.title}&lt;/a&gt;{/literal}</code> <br />links to a specific subpage of the actual page.</p>
+
+
+<h2>Linking to static resources</h2>
+<p>
+	Static resources like images, javascript files and other non-dynamic resources can also easily be linked:
+	<ul>
+		<li>Place them somewhere within the pagebakery's root and</li>
+		<li>place a relative link to it.</li>
+	</ul>
+</p>
+<p>Example:</p>
+<p>The Page Bakery contains the famous jQuery javascript library, stored under <code>[pagebakery-root]/static/js/jquery-1.8.2.min.js</code>. To refer to the library within a page or the layout, just use <code>static/js/jquery-1.8.2.min.js</code></p> as reference, e.g.:
+<pre><code>&lt;script src=&quot;static/js/jquery-1.8.2.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+</p>

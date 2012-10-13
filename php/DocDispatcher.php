@@ -172,6 +172,7 @@ class DocDispatcher {
 	}
 
 	private function parseRequest() {
+		$page = null;
 		if (isset($_REQUEST['page'])) {
 			$page = basename($_REQUEST['page']);
 			if ($this->getPagePath($page)) {
@@ -185,7 +186,7 @@ class DocDispatcher {
 			$this->sub = basename($conf[$this->page]['defaultSubpage']);
 		}
 
-		if (isset($_REQUEST['sub'])) {
+		if ($page && isset($_REQUEST['sub'])) {
 			$sub = basename($_REQUEST['sub']);
 			if ($this->getPagePath($page.'.'.$sub)) {
 				$this->sub = $sub;
@@ -229,7 +230,7 @@ class DocDispatcher {
 
 	private function outputPage($mode = 'web') {
 		if ($mode == 'web') {
-			header('Content-Type: text/html;charset=UTF-8');
+			header('Content-Type: '.Config::get('contentType','text/html;charset=UTF-8'));
 		}
 
 		$page = '';

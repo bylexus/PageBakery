@@ -3,7 +3,7 @@
     <div class="span2 well">
       <ul class="nav nav-pills nav-stacked">
 			{foreach $page.subpages as $subkey=>$subconfig}
-				<li class="{($sub_key==$subkey)?'active':''}"><a href="{$subconfig.link}">{$subconfig.title}</a></li>
+				<li class="{($sub_key==$subkey)?'active':''} {($subconfig.submenu|default:false)?'submenu':''}"><a href="{$subconfig.link}">{$subconfig.title}</a></li>
 			{/foreach}
 		</ul>
     </div>
@@ -12,9 +12,7 @@
     		{$subpage_content}
     	{else}
     		<h1>Usage</h1>
-    		{foreach $page.subpages as $subkey=>$subconfig}
-    			<p><a href="{$subconfig.link}">{$subconfig.title}</a></p>
-			{/foreach}
+        <p>Please refer to the menu on the left side for usage instructions.</p>
     	{/if}
     </div>
   </div>

@@ -1,44 +1,47 @@
 <h2>Writing Pages</h2>
 <p>
-	The Page bakery knows 3 types of entities:
+	The Page bakery knows 3 levels of hierarchy:
 	<ul>
-		<li><a href="{$page.subpages.layouts.link}">Layouts</a> define the global skeleton or
-			design of a page. In the standard case, a Page Bakery site just contains 1 layout.</li>
-		<li>A Page is part of a layout, which form a whole web page together. The page fills the
-			layout with content.
+		<li><a href="{$page.subpages['writing.layouts'].link}">Layouts</a> define the global skeleton or
+			design of a page. In the standard case, a Page Bakery site just contains 1 layout with multiple pages.</li>
+		<li>A Page is part of a layout, which forms a whole web page together. The page fills the
+			layout with content, and can contail multiple sub-pages.
 		</li>
-		<li>A page can contain multiple <a href="{$page.subpages.writing_subpages.link}">sub-pages</a>, e.g.
+		<li>A page can contain multiple <a href="{$page.subpages['writing.subpages'].link}">sub-pages</a>, e.g.
 			it can define a sub-menu which splits the page into smaller parts.</a></li>
 	</ul>
 </p>
 
-<p>In the standard case, you write one layout file, but multiple page content files: The idea behind the layouts is the shared design of every page, so you can concentrate on the content instead.</p>
-<p>All layout and page content files are <a href="http://smarty.net/">Smarty 3</a>-Templates. Please refer to their documentation for an in-detail description of Smarty's possibilities.</p>
-<p>All layout and page content files go to the <code>pages/</code> directory, or wherever you set the <code>pageDir</code> variable in doc_config.php The filename must be <code>pages/page-key.html</code>. The page-key is the key you used in the <code>pages</code> config in doc_config.php.</p>
+<p>All layouts, pages and subpages are represented by a <a href="http://smarty.net">Smarty-</a>Template. Each template is stored as an HTML file in <code>pages/page-name.html</code> and can use all the template mechanisms known by Smarty. The available Smarty template variables can be found below.
 
-<p>An example entry for the page 'index' in the config looks as follows:</p>
+<h3>3 Steps to a page</h3>
+<h4>Step 1: Write a layout</h4>
+See section <a href="{$page.subpages['writing.layouts'].link}">{$page.subpages['writing.layouts'].title}</a> for detailed instructions. In short: A layout is a file in <code>pages/</code> which contains the layout code and includes the actual body's content at one point.
+
+<h4>Step 2: Configure the page</h4>
+Each page contains an entry in the <code>pages</code> entry in <code>doc_config.php</code>. A simple page can be defined as follows:
 <pre><code>Config::set('pages',array(
-	'index' => array('title' => 'Overview','iconCls'=> 'icon-home')
-);</code></pre>
-
-<p>The corresponding file is <code>pages/index.html</code>. A very simple page template can look as follows:
-{literal}
-<pre><code>&lt;h1&gt;Hello, World!&lt;/h1&gt;
-&lt;p&gt;You are on page '{$page_key}'.&lt;/p&gt;
+	'index' => array('title' => 'Overview','iconCls'=> 'icon-home','layout'=>'layout')
+	)
+);
 </code></pre>
-{/literal}
-which ends in:
-<div class="well">
-<h1>Hello, World!</h1>
-<p>You are on page 'index'. </p>
-</div>
-</p>
+This defines the page <code>index</code> with some attributes. The attributes can be defined as you need them: You have access to those attributes in the template. There are only 3 attributes that are system-dependant:
+<ul>
+	<li><code>layout</code>: If set, the defined layout file is used. Defaults to 'layout' (and thus, pages/layout.html as a template).</li>
+	<li><code>subpages</code>: an array defining subpages. More on this topic can be found in the <a href="{$page.subpages['writing.subpages'].link}">{$page.subpages['writing.subpages'].title}</a> section.</li>
+	<li><code>defaultSubpage</code>: Defines the default subpage to be shown.</li>
+</ul>
+
+<h4>Step 4: Write the page!</h4>
+Which is described in the <a href="{$page.subpages['writing.pages'].link}">{$page.subpages['writing.pages'].title}</a> section.
+
+
 
 <h3>Template variables</h3>
-All templates, including the layout template, know the following Smarty-assigned variables:
+All templates, including the layout template, know the following Smarty-assigned variables, which can be used within the layouts/pages/subpages template files to add some logic:
 <table class="table table-striped table-bordered table-hover">
 	<thead>
-		<tr><th>Variable name</th><th>Description</th><th>Template Usage Example</th></tr>
+		<tr><th>Variable name</th><th>Description</th><th><nobr>Template Usage Example</nobr></th></tr>
 	</thead>
 	<tbody>
 		<tr>
@@ -105,18 +108,21 @@ All templates, including the layout template, know the following Smarty-assigned
 
 		<tr>
 			<td>$page_content</td>
-			<td><td><pre><code>{literal}{/literal}</code></pre>
+			<td>Contains the actual page's content. Only useful in layouts where
+				you want the actual page's content to be displayed.</td>
+			<td><pre><code>{literal}&lt;html&gt;
+  &lt;body&gt;
+    &lt;div&gt;Page: {$page.title}&lt;/div&gt;
+    &lt;div&gt;{$page_content}&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;{/literal}</code></pre>
 			</td>
 		</tr>
 
 		<tr>
 			<td>$subpage_content</td>
-			<td><td><pre><code>{literal}{/literal}</code></pre>
+			<td>{literal}Same as the page_content variable, but contains the SUB-page content of an actual page. Only useful in pages which contain sub-pages.</td><td><pre><code>Page: {$page.title}&lt;br /&gt;{$subpage_content}{/literal}</code></pre>
 			</td>
 		</tr>
 	</tbody>
 </table>
-
-<h3>Linking between pages</h3>
-
-<h3>Linkink to static resources</h3>

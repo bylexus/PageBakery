@@ -53,8 +53,10 @@ Config::set('pages',array(
 			'requirements' => array('title' => 'Requirements'),
 			'configuration' => array('title' => 'Configuration'),
 			'writing' => array('title' => 'Writing Pages'),
-			'writing_subpages' => array('title' => 'Writing Subpages'),
-			'layouts' => array('title' => 'Defining Layouts'),
+			'writing.layouts' => array('title' => 'Layouts','submenu'=>true),
+			'writing.pages' => array('title' => 'Pages','submenu'=>true),
+			'writing.subpages' => array('title' => 'Subpages','submenu'=>true),
+			'linking' => array('title'=>'Linking'),
 			'dynamic' => array('title' => 'Dynamic page display'),
 			'static' => array('title' => 'Generate Static HTML Pages')
 		)
@@ -93,4 +95,10 @@ Config::set('defaultPage','index');
  * except those that define its own layout.
  */
 Config::set('defaultLayout','layout');
+
+/**
+ * The content-type header to be set on the output.
+ * Defaults to text/html;charset=UTF-8.
+ */
+Config::set('contentType','text/html;charset=UTF-8');
 

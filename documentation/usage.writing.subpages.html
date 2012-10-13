@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Subpages - Usage - The Page Bakery Documentation</title>
+  <!-- Bootstrap -->
+  <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+  <style type="text/css">
+      .bottombar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.2em;
+            border-top: 1px solid #D4D4D4;
+            backgound-color: #FAFAFA;
+            background-image: -moz-linear-gradient(top,#F2F2F2,white);
+            background-image: -webkit-gradient(linear,0 0,0 100%,from(#F2F2F2),to(white));
+            background-image: -webkit-linear-gradient(top,#F2F2F2,white);
+            background-image: -o-linear-gradient(top,#F2F2F2,white);
+            background-image: linear-gradient(to bottom,#F2F2F2,white);
+            background-repeat: repeat-x;
+        }
+
+
+        body {
+          padding-top: 50px;
+          background-image: url(static/img/cubes.png);
+          background-repeat: repeat;
+        }
+
+        .navbar .brand {
+          padding-left: 2em;
+        }
+
+        .hero-unit {
+          background-color: transparent;
+        }
+
+        .nav .submenu a {
+          font-size: 0.8em;
+          margin-left: 2em;
+          padding: 0.5em;
+        }
+  </style>
+</head>
+<body>
+  
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <a class="brand" href="index.html">The Page Bakery!</a>
+      <ul class="nav">
+                  <li class=""><a href="index.html"><i class="icon-home"></i> Overview</a></li>
+                  <li class="active"><a href="usage.html"><i class="icon-wrench"></i> Usage</a></li>
+                  <li class=""><a href="credits.html"><i class="icon-globe"></i> Credits</a></li>
+                  <li class=""><a href="contact.html"><i class="icon-comment"></i> Contact</a></li>
+              </ul>
+
+    </div>
+  </div>
+
+  <div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2 well">
+      <ul class="nav nav-pills nav-stacked">
+							<li class=" "><a href="usage.requirements.html">Requirements</a></li>
+							<li class=" "><a href="usage.configuration.html">Configuration</a></li>
+							<li class=" "><a href="usage.writing.html">Writing Pages</a></li>
+							<li class=" submenu"><a href="usage.writing.layouts.html">Layouts</a></li>
+							<li class=" submenu"><a href="usage.writing.pages.html">Pages</a></li>
+							<li class="active submenu"><a href="usage.writing.subpages.html">Subpages</a></li>
+							<li class=" "><a href="usage.linking.html">Linking</a></li>
+							<li class=" "><a href="usage.dynamic.html">Dynamic page display</a></li>
+							<li class=" "><a href="usage.static.html">Generate Static HTML Pages</a></li>
+					</ul>
+    </div>
+    <div class="span10">
+    	 
+    		<h2>Writing Subpages</h2>
+<p>A subpage is the lowest entry in the hierarchy: A page can contain multiple
+	subpages. This is useful if you want to separate one page into smaller sub-parts, e.g. split the documentation of a specific topic into multiple sub-sections.
+</p>
+<p>As a page, also sub-pages are Smarty-Templates and have access to all 
+	template variables. Sub-Pages are stored in the format <code>pages/[page-name].[subpage-name].html</code>. E.g. this page is stored as <code>pages/usage.writing.html</code>.
+</p>
+
+<h3>Configuration of sub-pages</h3>
+The configuration of sub-pages is done within a page-config:
+<pre><code>Config::set('pages',array(
+	'index' => array('title' => 'Overview','iconCls'=> 'icon-home'),
+	'usage' => array('title' => 'Usage','iconCls' => 'icon-wrench','layout'=>'layout',
+		'subpages' => array(
+			'requirements' => array('title' => 'Requirements'),
+			'configuration' => array('title' => 'Configuration')
+		)
+	)
+)</code></pre>
+
+<p>Subpages are defined by defining a <code>subpages</code> array within a pages config. The subpage config itself is the same as for pages: All attributes set can later be accessed in the
+template.</p>
+<p>The page configuration attribute <code>defaultSubpage</code> defines, which subpage should be displayed by default, when the page is requested without subpage request. This is useful if you don't want to display an inttroducory page for subpages, but want to display the first subpage directly.</p>
+<p>Subpage content can be displayed within the actual page by using the <code>$subpage_content</code> template variable.</p>
+
+<p>An example of a page including links to all its sub-pages and the content itself:</p>
+<pre><code>&lt;div class=&quot;menu&quot;&gt;
+  &lt;ul&gt;
+	{foreach $page.subpages as $key=&gt;$subconfig}
+		&lt;li class=&quot;{($sub_key==$key)?'active':''}
+		  &lt;a href=&quot;{$subconfig.link}&quot;&gt;{$subconfig.title}&lt;/a&gt;
+		&lt;/li&gt;
+	{/foreach}
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;subpage_content&quot;&gt;
+	{$subpage_content}
+&lt;/div&gt;
+</code></pre>
+
+    	    </div>
+  </div>
+</div>
+
+
+		
+
+		
+
+
+
+
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+
+  <div class="bottombar">
+    <div class="bottombar-inner">
+      &copy; 2012 <a href="http://www.alexi.ch/">alexi.ch</a>
+    </div>
+  </div>
+
+  <script src="static/js/jquery-1.8.2.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+</body>
+</html> 

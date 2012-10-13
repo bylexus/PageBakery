@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>{($sub_key)?($sub.title|cat:' - '):''}{$page.title} - The Page Bakery Documentation</title>
+  <title>Contact - The Page Bakery Documentation</title>
   <!-- Bootstrap -->
   <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,17 +49,20 @@
   
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-      <a class="brand" href="{$defaultPage.link}">The Page Bakery!</a>
+      <a class="brand" href="index.html">The Page Bakery!</a>
       <ul class="nav">
-        {foreach $pages as $pageKey=>$pageItem}
-          <li class="{($page_key==$pageKey)?'active':''}"><a href="{$pageItem.link}"><i class="{$pageItem.iconCls}"></i> {$pageItem.title|escape:html}</a></li>
-        {/foreach}
-      </ul>
+                  <li class=""><a href="index.html"><i class="icon-home"></i> Overview</a></li>
+                  <li class=""><a href="usage.html"><i class="icon-wrench"></i> Usage</a></li>
+                  <li class=""><a href="credits.html"><i class="icon-globe"></i> Credits</a></li>
+                  <li class="active"><a href="contact.html"><i class="icon-comment"></i> Contact</a></li>
+              </ul>
 
     </div>
   </div>
 
-  {$page_content}
+  <div class="container">
+
+</div>
 
   <br />
   <br />

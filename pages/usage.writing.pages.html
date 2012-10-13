@@ -1,0 +1,24 @@
+<p>Like layouts, also pages are written in a template file in <code>pages/[page-name].html</code> file. All Smarty template variables are accessible in a page template, too.</p>
+
+<p>There are some special variables known in a page (but also in the layout, if needed) which are useful within the actual page</p>
+
+<p>All layout and page content files are <a href="http://smarty.net/">Smarty 3</a>-Templates. Please refer to their documentation for an in-detail description of Smarty's possibilities.</p>
+<p>All layout and page content files go to the <code>pages/</code> directory, or wherever you set the <code>pageDir</code> variable in doc_config.php The filename must be <code>pages/page-key.html</code>. The page-key is the key you used in the <code>pages</code> config in doc_config.php.</p>
+
+<p>An example entry for the page 'index' in the config looks as follows:</p>
+<pre><code>Config::set('pages',array(
+	'index' => array('title' => 'Overview','iconCls'=> 'icon-home')
+);</code></pre>
+
+<p>The corresponding file is <code>pages/index.html</code>. A very simple page template can look as follows:
+{literal}
+<pre><code>&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;p&gt;You are on page '{$page_key}'.&lt;/p&gt;
+</code></pre>
+{/literal}
+which ends in:
+<div class="well">
+<h1>Hello, World!</h1>
+<p>You are on page 'index'. </p>
+</div>
+</p>
