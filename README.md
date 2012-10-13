@@ -22,6 +22,9 @@ This project is mainly grown out of the need of creating documentation HTML,
 with the ability to use it as static offline version, but STILL keep the possibility
 to just "create" the surrounding layout / design.
 
-This information is updated soon, this is the initial commit.
+Please refer to The Page Bakery github page for 
+instructions / manual:
+
+http://bylexus.github.com/PageBakery/
 
 2012-10-10, https://github.com/bylexus/PageBakery
